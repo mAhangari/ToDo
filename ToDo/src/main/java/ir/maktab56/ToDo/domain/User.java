@@ -4,7 +4,7 @@ import javax.persistence.*;
 import ir.maktab56.ToDo.base.domain.BaseEntity;
 
 @MappedSuperclass
-public class User extends BaseEntity<Long> {
+public class User extends BaseEntity<Long>{
 	
 	@Column(length = 50)
 	private String username;
