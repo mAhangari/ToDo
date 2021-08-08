@@ -5,4 +5,10 @@ import ir.maktab56.ToDo.domain.Customer;
 
 public interface CustomerRepository extends BaseRepository<Customer, Long> {
 
+	<T> boolean checkUsername(T username);
+
+	<UT, PT> boolean checkCustomerInfo(UT username, PT password);
+	
+	<T> Customer findByUsername(T username);
+
 }
