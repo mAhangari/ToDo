@@ -30,4 +30,9 @@ public class Admin extends User{
 	public void setIsSuperAdmin(Boolean isSuperAdmin) {
 		this.isSuperAdmin = isSuperAdmin;
 	}
+	
+	public String toString() {
+		return "Id: " + getId() + ", First Name: " + getFirstName() + ", Last Name: " + getLastName()
+				+ "\nUserName: " + getUsername() + ", National Code: " + getNationalCode();
+	}
 }
