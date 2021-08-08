@@ -8,7 +8,7 @@ public class BaseEntity<ID> {
 	@Id
 	@GeneratedValue
     private ID id;
-	@Column(name = "is-deleted", columnDefinition = "TINYINT(1)")
+	@Column(name = "is_Delet", columnDefinition = "TINYINT(1)")
     private Boolean isDeleted;
     
     public BaseEntity(ID id, Boolean isDeleted) {
