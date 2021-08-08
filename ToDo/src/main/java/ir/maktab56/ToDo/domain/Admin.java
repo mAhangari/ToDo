@@ -11,6 +11,10 @@ public class Admin extends User{
 	@Column(name = "is_super_admin", columnDefinition = "TINYINT(1)")
 	private Boolean isSuperAdmin;
 	
+	public Admin() {
+		super();
+	}
+	
 	public Admin(Long id, Boolean isDeleted, String username, String password, String nationalCode, String firstName,
 			String lastName, String email, String mobileNumber, String userType, Boolean isActive,
 			Boolean isSuperAdmin) {
