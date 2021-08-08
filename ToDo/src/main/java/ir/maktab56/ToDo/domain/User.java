@@ -6,13 +6,13 @@ import ir.maktab56.ToDo.base.domain.BaseEntity;
 @MappedSuperclass
 public class User extends BaseEntity<Long>{
 	
-	@Column(length = 50)
+	@Column(length = 50, unique = true)
 	private String username;
 	
 	@Column(length = 20)
     private String password;
 	
-	@Column(name = "national_code", length = 15)
+	@Column(name = "national_code", length = 15, unique = true)
     private String nationalCode;
 	
 	@Column(name = "first_name", length = 50)
@@ -21,7 +21,7 @@ public class User extends BaseEntity<Long>{
 	@Column(name = "last_name", length = 50)
     private String lastName;
 	
-	@Column(name = "email_address")
+	@Column(name = "email_address", unique = true)
     private String email;
 	
 	@Column(name = "mobile_number")
@@ -33,6 +33,10 @@ public class User extends BaseEntity<Long>{
 	@Column(name = "is_active", columnDefinition = "TINYINT(1)")
     private Boolean isActive;
     
+	public User() {
+		super();
+	}
+	
     public User(Long id, Boolean isDeleted, String username, String password, String nationalCode, String firstName,
 			String lastName, String email, String mobileNumber, String userType, Boolean isActive) {
 		super(id, isDeleted);
