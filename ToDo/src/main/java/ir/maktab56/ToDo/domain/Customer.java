@@ -1,8 +1,10 @@
 package ir.maktab56.ToDo.domain;
 
 import java.sql.Date;
-import javax.persistence.Column;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "customer")
 public class Customer extends User{
 
 	@Column(name = "birthday")
