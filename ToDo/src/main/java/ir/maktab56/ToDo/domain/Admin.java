@@ -1,7 +1,11 @@
 package ir.maktab56.ToDo.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "admin")
 public class Admin extends User{
 	
 	@Column(name = "is_super_admin", columnDefinition = "TINYINT(1)")
