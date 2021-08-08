@@ -1,9 +1,7 @@
 package ir.maktab56.ToDo.repository.impl;
 
-import java.sql.SQLException;
 import java.util.*;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.*;
 import ir.maktab56.ToDo.base.reposiotry.impl.BaseRepositoryImpl;
 import ir.maktab56.ToDo.domain.Customer;
 import ir.maktab56.ToDo.repository.CustomerRepository;
@@ -13,36 +11,56 @@ public class CustomerRepositoryImpl extends BaseRepositoryImpl<Customer, Long> i
 	public CustomerRepositoryImpl(EntityManagerFactory emf) {
 		super(emf);
 	}
-
-	public void save(Customer customer) throws SQLException {
+	
+	@Override
+	public void save(Customer customer) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 			em.persist(customer);
 		em.getTransaction().commit();
 		em.close();
 	}
-
-	public void update(Customer customer) throws SQLException {
+	
+	@Override
+	public void update(Customer customer) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 			em.merge(customer);
 		em.getTransaction().commit();
 		em.close();
 	}
-
+	
+	@Override
 	public List<Customer> findAllById(Collection<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager en = emf.createEntityManager();
+		try {
+			List<Customer> customers = new ArrayList<>();
+			for(Long id: ids) {
+				customers.add(findById(id));
+			}
+			return customers;
+		}catch(NoResultException e) {
+			return null;
+		}finally {
+			en.close();
+		}
 	}
-
-	public List<Customer> findAll() throws SQLException {
+	
+	@Override
+	public List<Customer> findAll() {
 		EntityManager em = emf.createEntityManager();
-		List<Customer> customers = em.createQuery("SELECT * FROM customer", Customer.class).getResultList();
-		em.close();
-		return customers;
+		try {
+			List<Customer> customers = em.createQuery("SELECT c FROM Customer c", Customer.class).getResultList();
+			return customers;
+		}catch(NoResultException e) {
+			return null;
+		}finally {
+			em.close();
+		}
 	}
-
-	public void deleteById(Long id) throws SQLException {
+	
+	@Override
+	public void deleteById(Long id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 			Customer customer = em.find(Customer.class, id);
@@ -50,15 +68,17 @@ public class CustomerRepositoryImpl extends BaseRepositoryImpl<Customer, Long> i
 		em.getTransaction().commit();
 		em.close();
 	}
-
-	public Customer findById(Long id) throws SQLException {
+	
+	@Override
+	public Customer findById(Long id) {
 		EntityManager em = emf.createEntityManager();
 		Customer customer = em.find(Customer.class, id);
 		em.close();
 		return customer;
 	}
-
-	public Boolean existsById(Long id) throws SQLException {
+	
+	@Override
+	public Boolean existsById(Long id) {
 		EntityManager em = emf.createEntityManager();
 		if(em.find(Customer.class, id) != null) {
 			em.close();
@@ -66,5 +86,48 @@ public class CustomerRepositoryImpl extends BaseRepositoryImpl<Customer, Long> i
 		}
 		em.close();
 		return false;
+	}
+	
+	@Override
+	public <T> boolean checkUsername(T username) {
+		EntityManager em = emf.createEntityManager();
+		try{
+			Query query = em.createQuery("SELECT c FROM Customer AS c WHERE c.username =: Username", Customer.class);
+			query.setParameter("Username", username).getSingleResult();		
+			return true;
+		}catch(NoResultException e) {
+			return false;
+		}finally {
+			em.close();
+		}
+	}
+	
+	@Override
+	public <UT, PT> boolean checkCustomerInfo(UT username, PT password) {
+		EntityManager em = emf.createEntityManager();
+		try {
+			Query query = em.createQuery("SELECT c FROM Customer AS c WHERE c.username =: Username AND c.password =: Password", Customer.class); 
+			query.setParameter("Username", username);
+			query.setParameter("Password", password);
+			query.getSingleResult();
+			return true;
+		}catch(NoResultException e) {
+			return false;
+		}finally{
+			em.close();
+		}
+	}
+
+	@Override
+	public <T> Customer findByUsername(T username) {
+		EntityManager em = emf.createEntityManager();
+		try {
+			Customer customer = em.createQuery("SELECT c FROM Customer AS c WHERE c.username =: Username", Customer.class).setParameter("Username", username).getSingleResult();
+			return customer;
+		}catch(NoResultException e) {
+			return null;
+		}finally {
+			em.close();
+		}
 	}
 }
