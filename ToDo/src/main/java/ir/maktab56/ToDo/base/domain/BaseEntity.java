@@ -11,6 +11,9 @@ public class BaseEntity<ID> {
 	@Column(name = "is_Delet", columnDefinition = "TINYINT(1)")
     private Boolean isDeleted;
     
+	public BaseEntity() {
+	}
+	
     public BaseEntity(ID id, Boolean isDeleted) {
 		this.setId(id);
 		this.setDeleted(isDeleted);
