@@ -23,8 +23,16 @@ public class Activity extends BaseEntity<Long> implements Comparable<Activity> {
 	@Column(name = "date", nullable = false)
 	private Date date;
 	
-	public Activity(Long id, Boolean isDeleted, State state, Mode mode, String title, Date date) {
-		super(id, isDeleted);
+	@ManyToOne
+	@JoinColumn(name = "customer_id", nullable = false)
+	private Customer customer; 
+	
+	public Activity() {
+		super();
+	}
+	
+	public Activity(Boolean isDeleted, State state, Mode mode, String title, Date date) {
+		super(isDeleted);
 		this.setState(state);
 		this.setMode(mode);
 		this.setTitle(title);
