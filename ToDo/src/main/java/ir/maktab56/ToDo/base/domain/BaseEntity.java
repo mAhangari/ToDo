@@ -14,7 +14,7 @@ public class BaseEntity<ID> {
 	public BaseEntity() {
 	}
 	
-    public BaseEntity(ID id, Boolean isDeleted) {
+    public BaseEntity(Boolean isDeleted) {
 		this.setId(id);
 		this.setDeleted(isDeleted);
 	}
