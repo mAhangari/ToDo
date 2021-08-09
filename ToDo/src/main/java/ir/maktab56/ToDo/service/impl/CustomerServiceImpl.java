@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.*;
 import ir.maktab56.ToDo.base.service.impl.BaseServiceImpl;
 import ir.maktab56.ToDo.domain.Customer;
+import ir.maktab56.ToDo.domain.enumeration.UserType;
 import ir.maktab56.ToDo.repository.impl.CustomerRepositoryImpl;
 import ir.maktab56.ToDo.service.CustomerService;
 import ir.maktab56.ToDo.util.ApplicationContext;
@@ -81,8 +82,8 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, Long, Custome
 		}while(ApplicationContext.chInInformation.checkDate(birthday));
 		
 		Date date = Date.valueOf(birthday);
-		var id = choosCustomer(username).getId();
-		Customer customer = new Customer((id + 1), false, username, password, nationalCode, firstName, lastName, email, phoneNumber, "Customer", true, date);
+		
+		Customer customer = new Customer(false, username, password, nationalCode, firstName, lastName, email, phoneNumber, UserType.CUSTOMER, true, date);
 		ApplicationContext.customerRepo.save(customer);
 		System.out.println("\nCongratulations! Your Registration was Successful.\n But you should wait until admin accept your sign up.\n");
 	}
