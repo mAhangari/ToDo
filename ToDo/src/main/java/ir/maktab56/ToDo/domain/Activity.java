@@ -1,15 +1,26 @@
 package ir.maktab56.ToDo.domain;
 
 import java.util.Date;
+
+import javax.persistence.*;
 import ir.maktab56.ToDo.base.domain.BaseEntity;
 import ir.maktab56.ToDo.domain.enumeration.Mode;
 import ir.maktab56.ToDo.domain.enumeration.State;
 
+@Entity
+@Table(name = "activity")
 public class Activity extends BaseEntity<Long> implements Comparable<Activity> {
 	
+	@Column(name = "state", nullable = false)
 	private State state;
+	
+	@Column(name = "mode", nullable = false)
 	private Mode mode;
+	
+	@Column(name = "title", nullable = false)
 	private String title;
+	
+	@Column(name = "date", nullable = false)
 	private Date date;
 	
 	public Activity(Long id, Boolean isDeleted, State state, Mode mode, String title, Date date) {
