@@ -9,26 +9,13 @@ import ir.maktab56.ToDo.service.impl.Menu;
 
 public class ApplicationContext {
 	
-	public static final EntityManagerFactory emf = HibernateUtil.getEntityMangerFactory();
-	public static CustomerRepositoryImpl customerRepo;
-	public static CustomerServiceImpl customerServ;
-	public static AdminRepositoryImpl adminRepo;
-	public static AdminServiceImpl adminServ;
+	public static EntityManagerFactory emf = HibernateUtil.getEntityMangerFactory();
+	public static CustomerRepositoryImpl customerRepo = new CustomerRepositoryImpl(emf);
+	public static CustomerServiceImpl customerServ = new CustomerServiceImpl(customerRepo);
+	public static AdminRepositoryImpl adminRepo = new AdminRepositoryImpl(emf);
+	public static AdminServiceImpl adminServ = new AdminServiceImpl(adminRepo);
 
 	public static Menu menu = new Menu();
-	public static CheckInputInformation chInInformation = new CheckInputInformation();
-	
-	public static void getConnection() {
-		loadAll();
-	}
-	
-	private static void loadAll() {
-		customerRepo = new CustomerRepositoryImpl(emf);
-		customerServ = new CustomerServiceImpl(customerRepo);
-		
-		adminRepo = new AdminRepositoryImpl(emf);
-		adminServ = new AdminServiceImpl(adminRepo);
-	}
-	
+	public static CheckInputInformation chInInformation = new CheckInputInformation();	
 }
 
