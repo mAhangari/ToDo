@@ -8,7 +8,7 @@ import ir.maktab56.ToDo.base.domain.BaseEntity;
 @Table(name = "wallet")
 public class Wallet extends BaseEntity<Long> {
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_id", unique = true, nullable = false)
     private Customer customer;
 	
@@ -20,9 +20,12 @@ public class Wallet extends BaseEntity<Long> {
 	
 	@Column(name = "cach_amount")
     private Long cashAmount = 0L;
-
-    public Wallet(Long id, boolean isDeleted, Long totalAmount, Long creditAmount, Long cashAmount) {
-		super(id, isDeleted);
+	
+	public Wallet() {
+		super();
+	}
+    public Wallet(boolean isDeleted, Long totalAmount, Long creditAmount, Long cashAmount) {
+		super(isDeleted);
 		this.setTotalAmount(totalAmount);
 		this.setCreditAmount(creditAmount);
 		this.setCashAmount(cashAmount);
