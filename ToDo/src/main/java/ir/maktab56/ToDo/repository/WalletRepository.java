@@ -5,4 +5,6 @@ import ir.maktab56.ToDo.domain.Wallet;
 
 public interface WalletRepository extends BaseRepository<Wallet, Long> {
 
+	<T> Wallet findByUserId(T id);
+
 }
