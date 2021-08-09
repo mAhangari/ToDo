@@ -122,7 +122,7 @@ public class AdminRepositoryImpl extends BaseRepositoryImpl<Admin, Long> impleme
 	public <T> Admin findByUsername(T username) {
 		EntityManager em = emf.createEntityManager();
 		try {
-			Admin admin = em.createQuery("SELECT c FROM Admin AS c WHERE c.username =: Username", Admin.class).setParameter("Username", username).getSingleResult();
+			Admin admin = em.createQuery("SELECT a FROM Admin AS a WHERE a.username =: Username", Admin.class).setParameter("Username", username).getSingleResult();
 			return admin;
 		}catch(NoResultException e) {
 			return null;
