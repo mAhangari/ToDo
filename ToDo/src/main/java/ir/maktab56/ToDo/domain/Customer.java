@@ -10,6 +10,9 @@ public class Customer extends User{
 	@Column(name = "birthday")
 	private Date birthday;
 	
+	@Transient
+	private Wallet wallet;
+	
 	public Customer() {
 		super();
 	}
@@ -29,6 +32,14 @@ public class Customer extends User{
 		this.birthday = birthday;
 	}
 	
+	public Wallet getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
+	}
+
 	public String toString() {
 		return "Id: " + getId() + ", First Name: " + getFirstName() + ", Last Name: " + getLastName()
 				+ "\nUserName: " + getUsername() + ", National Code: " + getNationalCode();
