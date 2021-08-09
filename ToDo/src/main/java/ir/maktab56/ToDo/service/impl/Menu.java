@@ -10,12 +10,12 @@ public class Menu {
 	
 	public void loginUser(Customer customer) {
 		try {
-			System.out.println("-------------------------------");
-			System.out.println("|     1. Show All Activity    |");
-			System.out.println("|     2. New Activity         |");
-			System.out.println("|     3. Log Out              |");
-			System.out.println("-------------------------------");
-			System.out.print("Select One Of The Above Option: ");
+			System.out.println("    +-----------------------------+");
+			System.out.printf("%5s     %-22s%3s\n", "|", "1. Show All Activity", "|");
+			System.out.printf("%5s     %-22s%3s\n", "|", "2. Wallet", "|");
+			System.out.printf("%5s     %-22s%3s\n", "|", "3. Log Out", "|");
+			System.out.println("    +-----------------------------+");
+			System.out.print("       Select an Option: ");
 			switch(input.nextInt()) {
 			case 1:
 				ApplicationContext.customerServ.showAllActivity();
@@ -23,6 +23,7 @@ public class Menu {
 				loginUser(customer);
 				break;
 			case 2:
+				showWallet();
 				//ApplicationContext.customerServ.showCartProducts(customer.getId());
 				System.out.println();
 				loginUser(customer);
@@ -42,14 +43,18 @@ public class Menu {
 		}
 	}
 	
+	private void showWallet() {
+		
+	}
+	
 	public void showMenu() {
 		try {
-			System.out.println("------------------------");
-			System.out.println("|     1. Login User    |");
-			System.out.println("|     2. Sign Up       |");
-			System.out.println("|     3. Exit          |");
-			System.out.println("------------------------");
-			System.out.print("Select an Option: ");
+			System.out.println("    +----------------------+");
+			System.out.printf("%5s     %-15s%3s\n", "|", "1. Login User", "|");
+			System.out.printf("%5s     %-15s%3s\n", "|", "2. Sign Up", "|");
+			System.out.printf("%5s     %-15s%3s\n", "|", "3. Exit", "|");
+			System.out.println("    +----------------------+");
+			System.out.print("       Select an Option: ");
 			
 			switch(input.nextInt()) {
 			case 1:
