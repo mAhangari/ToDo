@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import ir.maktab56.ToDo.domain.enumeration.UserType;
+
 @Entity
 @Table(name = "admin")
 public class Admin extends User{
@@ -15,10 +17,10 @@ public class Admin extends User{
 		super();
 	}
 	
-	public Admin(Long id, Boolean isDeleted, String username, String password, String nationalCode, String firstName,
-			String lastName, String email, String mobileNumber, String userType, Boolean isActive,
+	public Admin(Boolean isDeleted, String username, String password, String nationalCode, String firstName,
+			String lastName, String email, String mobileNumber, UserType userType, Boolean isActive,
 			Boolean isSuperAdmin) {
-		super(id, isDeleted, username, password, nationalCode, firstName, lastName, email, mobileNumber, userType,
+		super(isDeleted, username, password, nationalCode, firstName, lastName, email, mobileNumber, userType,
 				isActive);
 		this.setIsSuperAdmin(isSuperAdmin);
 	}
