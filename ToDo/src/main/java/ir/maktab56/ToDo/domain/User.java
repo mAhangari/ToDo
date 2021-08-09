@@ -1,7 +1,9 @@
 package ir.maktab56.ToDo.domain;
 
+import java.util.*;
 import javax.persistence.*;
 import ir.maktab56.ToDo.base.domain.BaseEntity;
+import ir.maktab56.ToDo.domain.enumeration.UserType;
 
 @MappedSuperclass
 public class User extends BaseEntity<Long>{
@@ -28,18 +30,21 @@ public class User extends BaseEntity<Long>{
     private String mobileNumber;
 	
 	@Column(name = "user_type")
-    private String userType;
+    private UserType userType;
 	
 	@Column(name = "is_active", columnDefinition = "TINYINT(1)")
     private Boolean isActive;
+	
+	@OneToMany(mappedBy = "customer")
+	private List<Activity> avtivities = new ArrayList<>();
     
 	public User() {
 		super();
 	}
 	
-    public User(Long id, Boolean isDeleted, String username, String password, String nationalCode, String firstName,
-			String lastName, String email, String mobileNumber, String userType, Boolean isActive) {
-		super(id, isDeleted);
+    public User(Boolean isDeleted, String username, String password, String nationalCode, String firstName,
+			String lastName, String email, String mobileNumber, UserType userType, Boolean isActive) {
+		super(isDeleted);
 		this.setUsername(username);
 		this.setPassword(password);
 		this.setNationalCode(nationalCode);
@@ -107,11 +112,11 @@ public class User extends BaseEntity<Long>{
 		this.mobileNumber = mobileNumber;
 	}
 
-	public String getUserType() {
+	public UserType getUserType() {
 		return userType;
 	}
 
-	public void setUserType(String userType) {
+	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
 
@@ -122,4 +127,12 @@ public class User extends BaseEntity<Long>{
     public void setActive(Boolean active) {
         isActive = active;
     }
+
+	public List<Activity> getAvtivities() {
+		return avtivities;
+	}
+
+	public void setAvtivities(List<Activity> avtivities) {
+		this.avtivities = avtivities;
+	}
 }
