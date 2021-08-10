@@ -1,6 +1,5 @@
 package java_project;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 public class LinkList<E> implements Iterable<E>{
@@ -67,28 +66,13 @@ public class LinkList<E> implements Iterable<E>{
 		return false;
 	}
 
-	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public E get(int index) {
         return node(index).item;
 	}
 
-	public E set(int index, E element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void add(int index, E element) {
-		// TODO Auto-generated method stub
-		
+	public void set(int index, E element) {
+		Node<E> n = node(index);
+        n.item = element;
 	}
 
 	public E remove(int index) {
@@ -143,10 +127,18 @@ public class LinkList<E> implements Iterable<E>{
     }
 	
 	private Node<E> node(int index) {
-	    Node<E> x = first;
-	    for (int i = 0; i < index; i++)
-	        x = x.next;
-	    return x;
+		if(index <= size/2) {
+		    Node<E> x = first;
+		    for (int i = 0; i < index; i++)
+		        x = x.next;
+		    return x;
+		}
+		else {
+			Node<E> x = last;
+		    for (int i = size - 1; i > index; i--)
+		        x = x.prev;
+			return x;
+		}
 	}
 	
 }
