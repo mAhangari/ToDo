@@ -1,10 +1,8 @@
 package ir.maktab56.ToDo.domain;
 
 import java.util.Date;
-
 import javax.persistence.*;
 import ir.maktab56.ToDo.base.domain.BaseEntity;
-import ir.maktab56.ToDo.domain.enumeration.Mode;
 import ir.maktab56.ToDo.domain.enumeration.State;
 
 @Entity
@@ -13,9 +11,6 @@ public class Activity extends BaseEntity<Long> implements Comparable<Activity> {
 	
 	@Column(name = "state", nullable = false)
 	private State state;
-	
-	@Column(name = "mode", nullable = false)
-	private Mode mode;
 	
 	@Column(name = "title", nullable = false)
 	private String title;
@@ -31,10 +26,9 @@ public class Activity extends BaseEntity<Long> implements Comparable<Activity> {
 		super();
 	}
 	
-	public Activity(Boolean isDeleted, State state, Mode mode, String title, Date date) {
+	public Activity(Boolean isDeleted, State state, String title, Date date) {
 		super(isDeleted);
 		this.setState(state);
-		this.setMode(mode);
 		this.setTitle(title);
 		this.setDate(date);
 	}
@@ -62,19 +56,27 @@ public class Activity extends BaseEntity<Long> implements Comparable<Activity> {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public Mode getMode() {
-		return mode;
+	
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setMode(Mode mode) {
-		this.mode = mode;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	@Override
+	public int compareTo(Activity o) {
+		return (int)(this.getId() - o.getId());
 	}
 	
 	@Override
-	public int compareTo(Activity o) {
-		if(mode == Mode.INCREASE)
-			return (int)(this.getId() - o.getId());
-		return (int)(o.getId() - this.getId());
+	public String toString() {
+		String str = String.format("\n%5s %-4d%2s", "|", getId(), "|");
+    	str += String.format("  %-14s %2s", title, "|");
+    	str += String.format("  %-23s %2s", date, "|");
+    	str += String.format("  %-11s %2s\n", state, "|");
+    	str += 		 "    +---------------------------------------------------------------------+";
+		return str;
 	}
 }

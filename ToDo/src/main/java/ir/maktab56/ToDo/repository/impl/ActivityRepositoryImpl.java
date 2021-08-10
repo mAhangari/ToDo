@@ -14,20 +14,40 @@ public class ActivityRepositoryImpl extends BaseRepositoryImpl<Activity, Long> i
 
 	@Override
 	public void save(Activity activity) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-			em.persist(activity);
-		em.getTransaction().commit();
-		em.close();
-	}
-
-	@Override
-	public void update(Activity activity) {
+		if(activity == null)
+			return;
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 			em.merge(activity);
 		em.getTransaction().commit();
 		em.close();
+	}
+	
+	@Override
+	public void saveAll(Collection<Activity> activities) {
+		if(activities.isEmpty())
+			return;
+		for(Activity activity: activities)
+			save(activity);
+	}
+
+	@Override
+	public void update(Activity activity) {
+		if(activity == null)
+			return;
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+			em.merge(activity);
+		em.getTransaction().commit();
+		em.close();
+	}
+	
+	@Override
+	public void updateAll(Collection<Activity> activities) {
+		if(activities.isEmpty())
+			return;
+		for(Activity activity: activities)
+			update(activity);
 	}
 
 	@Override
@@ -72,9 +92,14 @@ public class ActivityRepositoryImpl extends BaseRepositoryImpl<Activity, Long> i
 	@Override
 	public Activity findById(Long id) {
 		EntityManager em = emf.createEntityManager();
-		Activity activity = em.find(Activity.class, id);
-		em.close();
-		return activity;
+		try{
+			Activity activity = em.find(Activity.class, id);
+			return activity;
+		}catch(NoResultException e) {
+			return null;
+		}finally {
+			em.close();
+		}
 	}
 
 	@Override
@@ -92,7 +117,7 @@ public class ActivityRepositoryImpl extends BaseRepositoryImpl<Activity, Long> i
 	public <T> List<Activity> findByUserId(T id) {
 		EntityManager em = emf.createEntityManager();
 		try {
-			List<Activity> activities = em.createQuery("SELECT * FROM Activity AS a WHERE a.customer_id =: customer_id", Activity.class).setParameter("customer_id", id).getResultList();
+			List<Activity> activities = em.createQuery("SELECT a FROM Activity AS a WHERE a.customer = (SELECT c FROM Customer AS c WHERE c.id =: id)", Activity.class).setParameter("id", id).getResultList();
 			return activities;
 		}catch(NoResultException e) {
 			return null;
