@@ -1,14 +1,11 @@
 package ir.maktab56.ToDo.base.service.impl;
 
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.List;
-
+import java.util.*;
 import ir.maktab56.ToDo.base.domain.BaseEntity;
 import ir.maktab56.ToDo.base.reposiotry.BaseRepository;
 import ir.maktab56.ToDo.base.service.BaseService;
 
-public class BaseServiceImpl<E extends BaseEntity<ID>, ID, R extends BaseRepository<E, ID>> implements BaseService<E, ID> {
+public abstract class BaseServiceImpl<E extends BaseEntity<ID>, ID, R extends BaseRepository<E, ID>> implements BaseService<E, ID> {
 	protected final R repository;
 	
 	public BaseServiceImpl(R repository) {
@@ -16,12 +13,12 @@ public class BaseServiceImpl<E extends BaseEntity<ID>, ID, R extends BaseReposit
 	}
 
 	@Override
-	public void save(E e) throws SQLException {
+	public void save(E e) {
 		repository.save(e);
 	}
 
 	@Override
-	public void update(E e) throws SQLException {
+	public void update(E e) {
 		repository.update(e);
 	}
 
@@ -31,22 +28,22 @@ public class BaseServiceImpl<E extends BaseEntity<ID>, ID, R extends BaseReposit
 	}
 
 	@Override
-	public List<E> findAll() throws SQLException {
+	public List<E> findAll() {
 		return repository.findAll();
 	}
 
 	@Override
-	public void deleteById(ID id) throws SQLException {
+	public void deleteById(ID id) {
 		repository.deleteById(id);
 	}
 
 	@Override
-	public E findById(ID id) throws SQLException {
+	public E findById(ID id) {
 		return repository.findById(id);
 	}
 
 	@Override
-	public Boolean existsById(ID id) throws SQLException {
+	public Boolean existsById(ID id) {
 		return repository.existsById(id);
 	}
 }
