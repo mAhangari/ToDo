@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class BaseEntity<ID> {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private ID id;
 	@Column(name = "is_Delet", columnDefinition = "TINYINT(1)")
     private Boolean isDeleted;
