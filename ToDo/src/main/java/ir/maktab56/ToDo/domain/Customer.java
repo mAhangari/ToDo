@@ -12,7 +12,8 @@ public class Customer extends User{
 	@Column(name = "birthday")
 	private Date birthday;
 	
-	@OneToOne(mappedBy = "customer")
+	@OneToOne(cascade = CascadeType.ALL, 
+			mappedBy = "customer")
 	private Wallet wallet;
 	
 	public Customer() {

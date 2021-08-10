@@ -16,7 +16,7 @@ public class CustomerRepositoryImpl extends BaseRepositoryImpl<Customer, Long> i
 	public void save(Customer customer) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-			em.persist(customer);
+			em.merge(customer);
 		em.getTransaction().commit();
 		em.close();
 	}
