@@ -14,15 +14,19 @@ public class WalletRepositoryImpl extends BaseRepositoryImpl<Wallet, Long> imple
 
 	@Override
 	public void save(Wallet wallet) {
+		if(wallet == null)
+			return;
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-			em.persist(wallet);
+			em.merge(wallet);
 		em.getTransaction().commit();
 		em.close();
 	}
 
 	@Override
 	public void update(Wallet wallet) {
+		if(wallet == null)
+			return;
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 			em.merge(wallet);
@@ -92,7 +96,7 @@ public class WalletRepositoryImpl extends BaseRepositoryImpl<Wallet, Long> imple
 	public <T> Wallet findByUserId(T id) {
 		EntityManager em = emf.createEntityManager();
 		try {
-			Wallet wallet = em.createQuery("SELECT w FROM Wallet AS w WHERE w.customer_id =: customer_id", Wallet.class).setParameter("customer_id", id).getSingleResult();
+			Wallet wallet = em.createQuery("SELECT w FROM Wallet AS w WHERE w.customer = (SELECT c FROM Customer AS c WHERE c.id =: id)", Wallet.class).setParameter("id", id).getSingleResult();
 			return wallet;
 		}catch(NoResultException e) {
 			return null;
@@ -100,4 +104,5 @@ public class WalletRepositoryImpl extends BaseRepositoryImpl<Wallet, Long> imple
 			em.close();
 		}
 	}
+	
 }
