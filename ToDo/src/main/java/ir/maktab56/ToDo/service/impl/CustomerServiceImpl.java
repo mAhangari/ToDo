@@ -99,44 +99,11 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, Long, Custome
 	}
 
 	public void addNewActivity(Customer customer) {
-		try {
-			State state = null;
+		
 			System.out.print("       Enter Activity Title: ");
 			input.nextLine();
 			var title = input.nextLine();
-			System.out.println("    +------ Stete Of Activity -----+");
-			System.out.printf("%5s     %-23s%3s\n", "|", "1. Open an Activity", "|");
-			System.out.printf("%5s     %-23s%3s\n", "|", "2. Activity In Progress", "|");
-			System.out.printf("%5s     %-23s%3s\n", "|", "3. Activity Completed", "|");
-			System.out.println("    +------------------------------+");
-			System.out.print("       Select an Option: ");
-			
-			switch(input.nextInt()) {
-			
-			case 1:
-				state = State.OPEN;
-				break;
-			case 2:
-				state = State.IN_PROGRESS;
-				break;
-			case 3:
-				state = State.COMPLETED;
-				break;
-			default:
-				System.out.println("    +--------------------------------+");
-				System.out.printf("%5s     %-25s%3s\n", "|", "Your Number Was Wrong!!", "|");
-				System.out.println("    +--------------------------------+");
-				addNewActivity(customer);
-			}
-			
-			ApplicationContext.activityServ.addActivity(customer, state, title);
-			
-		}catch(InputMismatchException e) {
-			input.nextLine();
-			System.out.println("    +-------------------------------------+");
-			System.out.printf("%5s     %-30s%3s\n", "|", "Please Insert a Right Number!", "|");
-			System.out.println("    +-------------------------------------+");
-			addNewActivity(customer);
-		}
+		
+			ApplicationContext.activityServ.addActivity(customer, State.OPEN, title);
 	}
 }
