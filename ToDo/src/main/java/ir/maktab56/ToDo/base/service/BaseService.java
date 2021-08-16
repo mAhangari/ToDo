@@ -6,17 +6,16 @@ import ir.maktab56.ToDo.base.domain.BaseEntity;
 
 public interface BaseService<E extends BaseEntity<ID>, ID> {
 	
-	void save(E e);
-
-    void update(E e);
+	E save(E e);
 
     List<E> findAllById(Collection<ID> ids);
 
     List<E> findAll();
 
-    void deleteById(ID id);
+    void delete(E e);
 
     E findById(ID id);
 
     Boolean existsById(ID id);
+    
 }

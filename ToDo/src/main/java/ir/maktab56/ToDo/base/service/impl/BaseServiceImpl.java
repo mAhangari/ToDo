@@ -1,6 +1,10 @@
 package ir.maktab56.ToDo.base.service.impl;
 
 import java.util.*;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+
 import ir.maktab56.ToDo.base.domain.BaseEntity;
 import ir.maktab56.ToDo.base.reposiotry.BaseRepository;
 import ir.maktab56.ToDo.base.service.BaseService;
@@ -13,33 +17,55 @@ public abstract class BaseServiceImpl<E extends BaseEntity<ID>, ID, R extends Ba
 	}
 
 	@Override
-	public void save(E e) {
-		repository.save(e);
-	}
-
-	@Override
-	public void update(E e) {
-		repository.update(e);
+	public E save(E e) {
+		EntityManager em = repository.getEntityManager();
+		em.getTransaction().begin();
+		e = repository.save(e);
+		em.getTransaction().commit();
+		em.close();
+		return e;
 	}
 
 	@Override
 	public List<E> findAllById(Collection<ID> ids) {
-		return repository.findAllById(ids);
+		try {
+			return repository.findAllById(ids);
+		}catch(NoResultException e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<E> findAll() {
-		return repository.findAll();
+		EntityManager em = repository.getEntityManager();
+		try{
+			return repository.findAll();
+		}catch(NoResultException e) {
+			return null;
+		}finally {
+			em.close();
+		}
 	}
 
 	@Override
-	public void deleteById(ID id) {
-		repository.deleteById(id);
+	public void delete(E e) {
+		EntityManager em = repository.getEntityManager();
+		em.getTransaction().begin();
+			repository.delete(e);
+		em.getTransaction().commit();
+		em.close();
 	}
 
 	@Override
 	public E findById(ID id) {
-		return repository.findById(id);
+		EntityManager em = repository.getEntityManager();
+		try{
+			return repository.findById(id);
+		}catch(NoResultException e) {
+			return null;
+		}finally {
+			em.close();
+		}
 	}
 
 	@Override
