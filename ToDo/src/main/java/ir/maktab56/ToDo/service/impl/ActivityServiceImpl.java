@@ -42,7 +42,6 @@ public class ActivityServiceImpl extends BaseServiceImpl<Activity, Long, Activit
 	
 	public Comparator<Activity> sorting() {
 		try {
-			Comparator<Activity> comparator;
 			System.out.println("    +---------- Sorting ----------+");
 			System.out.printf("%5s     %-22s%3s\n", "|", "1. Sort with Title", "|");
 			System.out.printf("%5s     %-22s%3s\n", "|", "2. Sort with Date", "|");
@@ -52,25 +51,9 @@ public class ActivityServiceImpl extends BaseServiceImpl<Activity, Long, Activit
 			switch(input.nextInt()) {
 			
 			case 1:
-				comparator = sortingMode(1);
-				if(comparator != null)
-					return comparator.reversed();
-				return new Comparator<Activity>() {
-					@Override
-					public int compare(Activity o1, Activity o2) {
-						return o1.getTitle().compareTo(o2.getTitle());
-					}
-				};
+				return sortingMode(1);
 			case 2:
-				comparator = sortingMode(2);
-				if(comparator != null)
-					return comparator.reversed();
-				return new Comparator<Activity>() {
-					@Override
-					public int compare(Activity o1, Activity o2) {
-						return o1.getDate().compareTo(o2.getDate());
-					}
-				};
+				return sortingMode(2);
 			default:
 				System.out.println("    +--------------------------------+");
 				System.out.printf("%5s     %-25s%3s\n", "|", "Your Number Was Wrong!!", "|");
@@ -90,7 +73,23 @@ public class ActivityServiceImpl extends BaseServiceImpl<Activity, Long, Activit
 	}
 	
 	private Comparator<Activity> sortingMode(int sort) {
+		Comparator<Activity> comparator;
 		try {
+			if(sort == 1)
+				comparator = new Comparator<Activity>() {
+				@Override
+				public int compare(Activity o1, Activity o2) {
+					return o1.getTitle().compareTo(o2.getTitle());
+				}
+			};
+			else
+				comparator = new Comparator<Activity>() {
+				@Override
+				public int compare(Activity o1, Activity o2) {
+					return o1.getDate().compareTo(o2.getDate());
+				}
+			};
+			
 			System.out.println("    +---------- Sorting ----------+");
 			System.out.printf("%5s     %-22s%3s\n", "|", "1. Increase Mode", "|");
 			System.out.printf("%5s     %-22s%3s\n", "|", "2. Decrease Mode", "|");
@@ -100,22 +99,9 @@ public class ActivityServiceImpl extends BaseServiceImpl<Activity, Long, Activit
 			switch(input.nextInt()) {
 			
 			case 1:
-				return null;
+				return comparator;
 			case 2:
-				if(sort == 1)
-					return new Comparator<Activity>() {
-					@Override
-					public int compare(Activity o1, Activity o2) {
-						return o1.getTitle().compareTo(o2.getTitle());
-					}
-				};
-				else
-					return new Comparator<Activity>() {
-					@Override
-					public int compare(Activity o1, Activity o2) {
-						return o1.getDate().compareTo(o2.getDate());
-					}
-				};
+				return comparator.reversed();
 			default:
 				System.out.println("    +--------------------------------+");
 				System.out.printf("%5s     %-25s%3s\n", "|", "Your Number Was Wrong!!", "|");
@@ -172,7 +158,7 @@ public class ActivityServiceImpl extends BaseServiceImpl<Activity, Long, Activit
 			Activity activity = findById(id);
 			if(activity != null) {
 				activity.setState(state);
-				update(activity);
+				save(activity);
 				System.out.println("    +-----------------------------+");
 				System.out.printf("%5s     %10s%5s\n", "|", "Operation Successed.", "|");
 				System.out.println("    +-----------------------------+");
