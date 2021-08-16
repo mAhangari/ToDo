@@ -8,10 +8,10 @@ import ir.maktab56.ToDo.domain.Activity;
 
 public interface ActivityRepository extends BaseRepository<Activity, Long>  {
 
+	Class<Activity> getEntityClass();
+	
 	<T> List<Activity> findByUserId(T id);
 
-	void saveAll(Collection<Activity> activities);
-
-	void updateAll(Collection<Activity> activities);
+	Collection<Activity> saveAll(Collection<Activity> activities);
 
 }
