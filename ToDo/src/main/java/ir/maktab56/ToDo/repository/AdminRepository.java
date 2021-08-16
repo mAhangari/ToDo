@@ -5,6 +5,8 @@ import ir.maktab56.ToDo.domain.Admin;
 
 public interface AdminRepository extends BaseRepository<Admin, Long> {
 
+	Class<Admin> getEntityClass();
+	
 	<T> boolean checkUsername(T username);
 
 	<UT, PT> boolean checkAdminInfo(UT username, PT password);
