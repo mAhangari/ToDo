@@ -20,7 +20,7 @@ public class WalletServiceImpl extends BaseServiceImpl<Wallet, Long, WalletRepos
 		try {
 			System.out.print("       Insert Value: ");
 			wallet.setCashAmount(input.nextLong());
-			ApplicationContext.walletRepo.update(wallet);
+			save(wallet);
 			System.out.println("    +-----------------------------+");
 			System.out.printf("%5s     %10s%5s\n", "|", "Operation Successed.", "|");
 			System.out.println("    +-----------------------------+");
